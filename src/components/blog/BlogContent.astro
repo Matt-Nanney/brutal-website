@@ -1,0 +1,23 @@
+---
+interface Props {
+  pubDate: Date;
+  author: string;
+}
+
+const { pubDate, author } = Astro.props;
+
+const formattedDate = (() => {
+  const d = pubDate instanceof Date ? pubDate : new Date(pubDate);
+  return d.toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+})();
+---
+
+<article class='prose-slate w-sm md:w-prose md:prose poppins'>
+  <a href='/blog/' title='Back to blog'>&larr; Back to blog</a>
+  <p class='text-slate text-sm md:text-base'>
+    Published on {formattedDate} by {author}
+  </p>
+  <slot />
+  <p class='text-slate'>Written by {author}</p>
+  <a href='/blog/' title='Back to blog'>&larr; Back to blog</a>
+</article>
